@@ -1,0 +1,27 @@
+{
+  "name": "dream",
+  "version": "1.0.0",
+  "description": "this is my dream",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [
+    "dream"
+  ],
+  "author": "shao lei",
+  "license": "ISC",
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "css-loader": "^0.27.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "file-loader": "^0.10.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "url-loader": "^0.5.8"
+  }
+}
