@@ -1,0 +1,5 @@
+interface fly(Flyable flyer){
+
+}
+
+class

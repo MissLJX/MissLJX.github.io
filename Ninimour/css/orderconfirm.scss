@@ -1,0 +1,138 @@
+@import 'order';
+
+.x-body-3 {
+  max-width: 1190px;
+  padding: 20px;
+  margin: auto;
+
+  .x-main {
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    $aside_width: 310px;
+    .x-wrapper {
+      float: left;
+      width: calc(100% - #{$aside_width});
+      padding-right: 25px;
+    }
+    .x-aside {
+      float: left;
+      width: $aside_width;
+      padding-left: 25px;
+      border-left: 1px solid $deep_light_font_color;
+    }
+  }
+}
+
+.oc-thanks {
+  padding-bottom: 20px;
+  .oc-icon {
+    display: inline-block;
+    margin-right: 15px;
+  }
+  .oc-title {
+    text-transform: uppercase;
+    font-size: $large_font_size;
+  }
+  .oc-thanks-dsc {
+    margin-top: 10px;
+    line-height: 20px;
+  }
+
+  .oc-edit-email {
+    margin-left: 15px;
+    text-decoration: underline;
+    color: $light_font_color;
+  }
+}
+
+.oc-aside {
+  h3 {
+    font-size: $large_font_size;
+  }
+
+  .hd {
+    border-bottom: 1px solid $deep_light_font_color;
+    padding-bottom: 15px;
+    position: relative;
+  }
+
+  .oc-address {
+    .oc-address-edit {
+      bottom: 20px;
+      right: 0;
+      position: absolute;
+      text-decoration: underline;
+    }
+
+    address {
+      margin-top: 15px;
+      line-height: 18px;
+    }
+  }
+
+  .oc-payment {
+    margin-top: 30px;
+    .bd {
+      line-height: 18px;
+      margin-top: 15px;
+    }
+  }
+
+  .oc-btns {
+    margin-top: 20px;
+    & > * {
+      display: block;
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: $big_font_size;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+  }
+}
+
+.oc-window{
+  width: 500px;
+}
+
+.oc-input{
+  height: 35px;
+  width: 100%;
+}
+
+.oc-input-liner{
+  margin-top: 15px;
+}
+
+.oc-input-liners{
+  &>.oc-input-liner{
+    &:first-child{
+      margin-top: 0;
+    }
+    &.oc-btn-liner{
+      margin-top: 25px;
+    }
+  }
+}
+
+
+.oc-submit-btn{
+  height: 40px;
+  font-size: $big_font_size;
+  text-transform: uppercase;
+  width: 130px;
+}
+
+.oc-reset-btn{
+  width: 140px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  margin-top: 10px;
+}
+

@@ -1,0 +1,42 @@
+@import "style";
+
+.x-search-area{
+  position: fixed;
+  z-index: 5;
+  width: 100%;
+  height: calc(100% - 50px);
+  background-color: rgba(255,255,255,0.92);
+  overflow-y: auto;
+  padding-top: 15px;
+
+  .x-search-banner{
+    .x-search-input{
+      width: 70%;
+      border: none;
+      outline: none;
+      -webkit-appearance: none;
+      border-bottom: 1px solid $default_font_color;
+      font-size: $big_font_size;
+      -webkit-appearance: none;
+    }
+    text-align: center;
+    background-color: #fff;
+  }
+
+  .x-list-words{
+    position: relative;
+    left: 50%;
+    margin-left: -50px;
+    line-height: 25px;
+    margin-top: 15px;
+    &>li{
+      cursor: pointer;
+      font-size: $mini_font_size;
+    }
+  }
+
+  .x-hot-words{
+    text-transform: uppercase;
+
+  }
+}

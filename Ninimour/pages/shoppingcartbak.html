@@ -1,0 +1,560 @@
+<%@page import="com.amour.wanna.core.utils.ContextUtils"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+String path = request.getContextPath();
+String serverPath = request.getServerName()+path+"/";
+String basePath = "http://"+serverPath;
+String sslPath = "https://"+serverPath;
+%>
+
+<%
+String shoppingpath = (String)request.getAttribute("shoppingpath");
+%>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart | Chiquedoll</title>
+    <meta name="description" content="Shopping Cart">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" href="${ctx}/resources/css/msite/shoppingcart.css">
+    <script>
+        var ctx = '${ctx}';
+        var shoppingpath = '<%=shoppingpath%>';
+        var serverPath = "<%=serverPath%>";
+        var basePath = "<%=basePath%>";
+        var token = "${token}";
+    </script>
+</head>
+<body>
+<div class="x-body">
+
+    <!--header-->
+    <%@ include file="module/header.jsp"%>
+
+    <!--menu-->
+    <%@ include file="module/nav.jsp"%>
+    <div class="x-wrapper">
+        <div class="x-main">
+            <div id="shoppingcart"></div>
+            <script id="tpl-shoppingcart" type="text/html">
+                <div class="s-cart">
+
+                    {{if empty}}
+                    <div class="s-empty-cart">
+                        <div class="s-empty-icon"></div>
+                        <div class="s-empty-dsc">Your bag is currently empty</div>
+                        <a class="s-empty-btn" href="<%=basePath%>index">GO SHOPPING</a>
+                    </div>
+                    {{else}}
+
+
+                    <%if(!"1".equals(shoppingpath)){%>
+                    <div class="s-block">
+                        <div class="hd">
+                            <h3>Shipping Address</h3>
+
+
+                            <%if(ContextUtils.isLogin()){%>
+                           		<span class="right-go" id="ninimour-edit-address">
+                                	<span class="x-v-middle">Edit</span>
+                                	<span class="go"></span>
+                           		</span>
+                            <%}else{%>
+								<span class="right-go" id="ninimour-temp-address">
+                                	<span class="x-v-middle">Edit</span>
+                                	<span class="go"></span>
+                           		</span>
+                            <%}%>
+                        </div>
+
+
+                        <%if(ContextUtils.isLogin() || "3".equals(shoppingpath)){%>
+                        {{if shippingDetail}}
+                        <div class="bd">
+                            <address>
+                                <div><strong>{{shippingDetail.name}}</strong>({{shippingDetail.phoneNumber}})</div>
+                                <div>{{shippingDetail.streetAddress1}} , {{shippingDetail.unit}}</div>
+                                <div>{{shippingDetail.zipCode}}, {{shippingDetail.city}}, {{if shippingDetail.state}}{{shippingDetail.state.label || shippingDetail.state.value}}, {{/if}}{{shippingDetail.country.label}}</div>
+                            </address>
+                        </div>
+                        {{/if}}
+                        <%}%>
+                    </div>
+                    <%}%>
+
+
+                    <!--country groups -->
+                    {{if domesticDeliveryCases && domesticDeliveryCases.length > 0}}
+                    {{each domesticDeliveryCases as domest}}
+
+                    <div class="s-blocks">
+                        <div class="s-block">
+                            <div class="hd s-oversease">
+                                <h3>
+                                    <img class="icon" src="{{domest.icon}}">
+                                    <div class="dsc">
+                                        <p>{{domest.title}}</p>
+                                        {{if shippingDetail}}
+                                        {{if shippingMethod.domesticDeliveryShippingPrice && shippingMethod.domesticDeliveryShippingPrice.amount > 0}}
+                                        <p class=""price>{{domest.domesticDeliveryShippingPrice | formatPrice}}</p>
+                                        {{else}}
+                                        <p class="price">FREE SHIPPING</p>
+                                        {{/if}}
+                                        {{/if}}
+
+                                    </div>
+                                </h3>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                    <ul class="s-items x-lay-fixed">
+
+                        {{each domest.shoppingCartProducts as product}}
+                        <li class="s-item {{if product.isDomesticDeliveryEnabled}}{{else}}gray{{/if}}">
+                            <div>
+                                <a href="{{product | getProductUrl}}"><img class="s-item-image" src="{{product.imageUrl}}"></a>
+                            </div>
+                            <div>
+                                <div class="s-infos">
+                                    <p class="s-item-name">{{product.productName}}</p>
+                                    <div>
+                                        {{if product.size}}
+                                        <span>{{product.size}}</span>
+                                        {{/if}}
+                                        {{if product.color}}
+                                        ,<span>{{product.color}}</span>
+                                        {{/if}}
+                                    </div>
+                                    <div>
+
+                                        {{if product.isDomesticDeliveryEnabled}}
+                                        {{if product.itemPrice.amount - product.realPrice.amount > 0}}
+                                        <span class="s-real-price">{{product.realPrice | formatPrice}}</span>
+                                        <span>{{if product.isProductDiscount}}(Discount){{else}}(Coupon){{/if}}</span>
+                                        <del class="s-delete-price">{{product.itemPrice | formatPrice}}</del>
+                                        <%-- <p class="x-red">{{product.productDiscountRate*100}}% OFF</p> --%>
+                                        {{else}}
+                                        <span class="s-real-price">{{product.realPrice | formatPrice}}</span>
+                                        {{/if}}
+                                        <span class="s-item-delete ninimour-item-delete" variant-quantity="{{product.quantity}}" variant-unit="{{product.realPrice.unit}}" variant-price="{{product.realPrice.amount}}" variant-id="{{product.variantId}}"></span>
+                                        {{else}}
+                                        <span>Out of stock</span>
+                                        {{/if}}
+                                    </div>
+                                    <div style="margin-top:28px">
+
+                                        {{if product.isDomesticDeliveryEnabled}}
+                                        <select class="s-quantity-select ninimour-quantity-select" variant-id="{{product.variantId}}">
+
+                                            {{if product.quantity <= 10}}
+                                            {{each selectNumbers as n}}
+                                            {{if n == product.quantity}}
+                                            <option selected value="{{n}}">{{n}}</option>
+                                            {{else}}
+                                            <option value="{{n}}">{{n}}</option>
+                                            {{/if}}
+                                            {{/each}}
+                                            {{else}}
+                                            {{each selectNumbers as n}}
+                                            <option value="{{n}}">{{n}}</option>
+                                            {{/each}}
+                                            <option selected value="{{product.quantity}}">{{product.quantity}}</option>
+                                            {{/if}}
+                                        </select>
+                                        <span class="x-btn s-item-edit ninimour-item-edit" variant-id="{{product.variantId}}" group-id="{{product.product.groupId}}" product-id="{{product.productId}}">Edit</span>
+                                        {{else}}
+                                        <span class="x-btn active s-move-to-overseas ninimour-move-to-over-seas" variant-id="{{product.variantId}}">Ships from overseas warehouse</span>
+                                        {{/if}}
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                    {{/each}}
+                    {{/if}}
+
+
+                    <!--oversease -->
+                    {{if shoppingCartProductsByOverseas && shoppingCartProductsByOverseas.length > 0}}
+                    <div class="s-blocks">
+
+                        <div class="s-block">
+                            <div class="hd s-oversease">
+                                <h3>
+                                    <img class="icon" src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon27.png">
+                                    <div class="dsc">
+                                        <p>Ships From Overseas</p>
+                                        {{if shippingDetail}}
+                                        {{if shippingMethod.price && shippingMethod.price.amount > 0}}
+                                        <p class="price">{{shippingMethod.price | formatPrice}}</p>
+                                        {{else}}
+                                        <p class="price">FREE SHIPPING</p>
+                                        {{/if}}
+                                        {{/if}}
+                                    </div>
+
+                                </h3>
+                                <%if(!"1".equals(shoppingpath)){%>
+                                {{if shippingDetail}}
+                                <span class="right-go" id="ninimour-select-shipping-method">
+                                    <span class="x-v-middle">{{shippingMethod.title}}</span>
+                                    <span class="go"></span>
+                                </span>
+                                {{/if}}
+                                <%}%>
+                            </div>
+
+                            <%if(!"1".equals(shoppingpath)){%>
+                            {{if shippingDetail}}
+
+                            {{if messages && messages.shippingMsg}}
+                            <div class="s-tip">{{# messages.shippingMsg}}</div>
+                            {{/if}}
+                            <!-- method list -->
+                            <div class="s-shipping-method-window" id="ninimour-shipping-method-window">
+                                <div class="hd">
+                                    <h3>Shipping Method</h3>
+                                    <span class="s-cancel"></span>
+                                </div>
+
+                                <div class="bd">
+                                    <ul class="s-shipping-method-list">
+                                        {{each shippingMethodList as _shippingMethod}}
+                                        <li class="ninimour-shipping-list-method s-shipping-method {{if _shippingMethod.id == shippingMethod.id}}active{{/if}}" data-method="{{_shippingMethod.id}}">
+                                            <div class="x-table">
+                                                <div class="x-cell x-v-middle">
+                                                    <div class="p">
+                                                        <div>{{_shippingMethod.title}} {{_shippingMethod.price | formatPrice}}</div>
+                                                        <div>{{_shippingMethod.shippingTime}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="x-cell x-v-middle x-text-right">
+                                                    <span class="s-right-gou"></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+
+                                    <div class="s-method-image">
+                                        <p>Express Shipping : We will choose the most appropciate carrier for you .</p>
+                                        <img  src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon17.png">
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{/if}}
+                            <%}%>
+                        </div>
+
+
+                    </div>
+
+                    <ul class="s-items x-lay-fixed">
+
+                        {{each shoppingCartProductsByOverseas as product}}
+                        <li class="s-item {{if product.status != '1' || product.inventory <= 0 || product.quantity > product.inventory}}gray{{/if}}">
+                            <div>
+                                <a href="{{product | getProductUrl}}"><img class="s-item-image" src="{{product.imageUrl}}"></a>
+                            </div>
+                            <div>
+                                <div class="s-infos">
+                                    <p class="s-item-name">{{product.productName}}</p>
+                                    <div>
+                                        {{if product.size}}
+                                        <span>{{product.size}}</span>
+                                        {{/if}}
+                                        {{if product.color}}
+                                        ,<span>{{product.color}}</span>
+                                        {{/if}}
+                                    </div>
+                                    <div>
+                                        {{if product.itemPrice.amount - product.realPrice.amount > 0}}
+                                        <span class="s-real-price">{{product.realPrice | formatPrice}}</span>
+                                        <span>{{if product.isProductDiscount}}(Discount){{else}}(Coupon){{/if}}</span>
+                                        <del class="s-delete-price">{{product.itemPrice | formatPrice}}</del>
+                                        <%-- <p class="x-red">{{product.productDiscountRate*100}}% OFF</p> --%>
+                                        {{else}}
+                                        <span class="s-real-price">{{product.realPrice | formatPrice}}</span>
+                                        {{/if}}
+                                        <span class="s-item-delete ninimour-item-delete" variant-quantity="{{product.quantity}}" variant-unit="{{product.realPrice.unit}}" variant-price="{{product.realPrice.amount}}" variant-id="{{product.variantId}}"></span>
+                                    </div>
+                                    <div style="margin-top:15px">
+
+                                        {{if product.status != '1' || product.inventory <= 0}}
+                                        <p class="s-soldout">Out of stock</p>
+                                        {{else}}
+                                        <select class="s-quantity-select ninimour-quantity-select" variant-id="{{product.variantId}}">
+
+                                            {{if product.quantity <= 10}}
+                                            {{each selectNumbers as n}}
+                                            {{if n == product.quantity}}
+                                            <option selected value="{{n}}">{{n}}</option>
+                                            {{else}}
+                                            <option value="{{n}}">{{n}}</option>
+                                            {{/if}}
+                                            {{/each}}
+                                            {{else}}
+                                            {{each selectNumbers as n}}
+                                            <option value="{{n}}">{{n}}</option>
+                                            {{/each}}
+                                            <option selected value="{{product.quantity}}">{{product.quantity}}</option>
+                                            {{/if}}
+                                        </select>
+                                        <span class="x-btn s-item-edit ninimour-item-edit" variant-id="{{product.variantId}}" group-id="{{product.product.groupId}}" product-id="{{product.productId}}">Edit</span>
+
+                                        {{if product.quantity > product.inventory}}
+                                        <span class="x-btn active s-item-left ninimour-item-left" variant-id="{{product.variantId}}" inventory="{{product.inventory}}">Only {{product.inventory}} left</span>
+                                        {{/if}}
+                                        {{/if}}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                    {{/if}}
+                    <div class="s-blocks">
+
+                        {{if shippingInsurancePrice}}
+                        <div class="s-block">
+                            <div class="x-table s-openbar">
+                                <div class="x-cell">
+                                    <p><strong class="x-red">{{shippingInsurancePrice | formatPrice}}</strong> of return insureance to enjoy FREE return! <a href="<%=basePath%>fs/free-return-policy" class="s-ask">?</a></p>
+                                </div>
+                                <div class="x-cell">
+                                    <span id="ninimour-insureance-open" class="s-open {{if insurance}}on{{/if}}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+
+
+
+
+
+
+
+                        <div class="s-block">
+                            <div class="hd">
+                                <h3>Coupons</h3>
+                                <span class="right-go" id="ninimour-select-coupon">
+                                    <span class="x-v-middle">{{if coupon}}<strong class="x-red">{{coupon.amount}} OFF</strong>&nbsp;&nbsp;{{coupon.name}}{{else}}{{/if}}</span>
+                                    <span class="go"></span>
+                                </span>
+                            </div>
+
+                            {{if messages && messages.couponMsg}}
+                            <div class="s-tip">{{# messages.couponMsg}}</div>
+                            {{/if}}
+                        </div>
+
+
+                        {{if expectedPoints && expectedPoints>0}}
+                        <div class="s-block">
+                            <div class="x-table s-openbar">
+                                <div class="x-cell">
+                                    <p>Apply <strong class="x-red">{{expectedPoints}}</strong> credits(<strong class="x-red">{{expectedPointDiscount | formatPrice}}</strong>) to this order? </p>
+                                </div>
+                                <div class="x-cell">
+                                    <span id="ninimour-credit-apply" class="s-open {{if openPointUse}}on{{/if}}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+
+                        <div class="s-block">
+                            <div class="hd">
+                                Order Summary
+                            </div>
+                            <div class="bd">
+                                <div class="s-summaries">
+                                    <div class="s-summary">
+                                        <div>Retail Price</div>
+                                        <div>{{orderSummary.itemTotal | formatPrice}}</div>
+                                    </div>
+
+                                    {{if orderSummary.productDiscount && orderSummary.productDiscount.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Discount</div>
+                                        <div>- {{orderSummary.productDiscount | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    {{if orderSummary.couponDiscount && orderSummary.couponDiscount.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Coupons</div>
+                                        <div>- {{orderSummary.couponDiscount | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    {{if orderSummary.pointDiscount && orderSummary.pointDiscount.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Credits</div>
+                                        <div>- {{orderSummary.pointDiscount | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    <div class="s-summary x-bold">
+                                        <div>Subtotal</div>
+                                        <div>{{orderSummary.subTotal | formatPrice}}</div>
+                                    </div>
+
+                                    {{if orderSummary.extraOff && orderSummary.extraOff.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Extra Off</div>
+                                        <div>- {{orderSummary.extraOff | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    {{if orderSummary.voucherDiscount && orderSummary.voucherDiscount.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Voucher</div>
+                                        <div>- {{orderSummary.voucherDiscount | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    <div class="s-summary">
+                                        {{if !!!orderSummary.shippingPrice || orderSummary.shippingPrice.amount <=0}}
+                                        <div class="x-red">Free Shipping</div>
+                                        <div class="x-red">{{orderSummary.shippingPrice | formatPrice}}</div>
+                                        {{else}}
+                                        <div>Estimated Shipping</div>
+                                        <div>{{orderSummary.shippingPrice | formatPrice}}</div>
+                                        {{/if}}
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="s-total">
+                            <span class="label">Order Total</span>
+                            <span class="price">{{orderSummary.orderTotal | formatPrice}}</span>
+                        </div>
+
+
+                        {{if messages && messages.orderSummaryMsg}}
+                        <div class="s-tip s-summary-tip">{{# messages.orderSummaryMsg}}</div>
+                        {{/if}}
+                    </div>
+
+
+                    <%if("1".equals(shoppingpath)){%>
+                    <div class="s-buy-tools">
+                        <div>
+                            <div id="ninimour-quick-pay" class="s-paypal-btn"></div>
+                        </div>
+                        <div>
+                            <a class="s-placeorder-pay" href="${ctx}/shoppingcart/proceed">Check Out</a>
+                        </div>
+                    </div>
+                    <%}else if("2".equals(shoppingpath)){%>
+                    <div class="s-buy-tools">
+                        <div>
+                            {{if shippingDetail}}
+                            <div id="ninimour-paypayl-pay" class="s-paypal-btn"></div>
+                            {{else}}
+                            <div id="ninimour-quick-pay" class="s-paypal-btn"></div>
+                            {{/if}}
+                        </div>
+                        <div>
+                            {{if shippingDetail}}
+                            <div id="ninimour-ocean-pay" class="s-credit-btn"></div>
+                            {{else}}
+                            <a class="s-placeorder-pay" href="${ctx}/shoppingcart/proceed">Check Out</a>
+                            {{/if}}
+                        </div>
+                    </div>
+                    <%}else if("3".equals(shoppingpath)){%>
+                    <div class="s-single-buy-tools">
+                        <div id="ninimour-place-order" class="s-placeorder-pay">Place Order</div>
+                    </div>
+                    <%}%>
+
+                    {{/if}}
+
+
+
+
+
+                    <%if(ContextUtils.isLogin()){ %>
+                    {{if shippingDetail}}
+                    <div class="s-credit-edit-window" id="ninimour-credit-edit-window">
+                        <div class="hd">
+                            <h3>Credit Card</h3>
+                            <span class="s-cancel" id="ninimour-credit-edit-close"></span>
+                        </div>
+                        <div class="bd">
+                            <div class="s-ocean-area">
+                                <iframe id="cardframe" width="100%" height="100%"  seamless  src="${ctx}/shoppingcart/ocean-frame" border=0></iframe>
+                            </div>
+                            <div class="s-nini-area">
+                                <ul class="s-cards" id="ninimour-frame-cards">
+
+                                </ul>
+                                <div class="x-table s-trust">
+                                    <div class="x-cell">
+                                        <img src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon12.png">
+                                    </div>
+                                    <div class="x-cell">
+                                        <p>We will not save your credit information. Trusted by over one millon shoppers in 50 countries.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    {{/if}}
+                    <%} %>
+
+                </div>
+
+            </script>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="x-loading-mask x-hide" id="ninimour-paypal-loading">
+        <div class="paypal-loading-wrap">
+            <div class="paypal-back"></div>
+            <div class="paypal-loading">
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="${ctx}/resources/js/jquery-1.11.3.min.js"></script>
+    <script src='${ctx}/resources/js/jquery.cookie.js'></script>
+    <script src="${ctx}/resources/js/template.js"></script>
+    <script src="${ctx}/resources/js/msite/static.js"></script>
+    <%@ include file="../commons/apis.jsp"%>
+    <script src="${ctx}/resources/js/msite/shoppingcart.js"></script>
+
+</body>
+</html>

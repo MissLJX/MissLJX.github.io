@@ -1,0 +1,17 @@
+@import "style";
+
+.c-collection{
+  img{
+    display: block;
+    width: 100%;
+  }
+}
+
+.c-collections{
+  .c-collection{
+    margin-top: 20px;
+    &:first-child{
+      margin-top: 20px;
+    }
+  }
+}

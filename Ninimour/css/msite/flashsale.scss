@@ -1,0 +1,21 @@
+@import "style";
+
+.fs-time-bar{
+  height: 50px;
+  position: relative;
+  background-color: $default_font_color;
+  line-height: 50px;
+  h2{
+    font-size: $big_font_size;
+    font-weight: bold;
+    color: #fff;
+  }
+  padding: 0 10px;
+
+  .fs-timer{
+    position: absolute;
+    top: 0;
+    right: 10px;
+    color: #fff;
+  }
+}

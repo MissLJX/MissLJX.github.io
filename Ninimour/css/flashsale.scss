@@ -1,0 +1,21 @@
+@import "style";
+
+.f-hd{
+  height: 55px;
+  line-height: 55px;
+  background-color: $default_font_color;
+  color: #fff;
+  position: relative;
+  text-transform: uppercase;
+  padding-left: 20px;
+  h1{
+    font-size: $large_font_size;
+    font-weight: bold;
+  }
+}
+
+.fs-timer{
+  position: absolute;
+  right: 20px;
+  top: 0;
+}

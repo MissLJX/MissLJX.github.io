@@ -1,0 +1,126 @@
+@import 'style';
+
+.login-body {
+  padding: 40px;
+
+  .x-login-container {
+    border-top: 1px dashed $deep_light_font_color;
+    padding-top: 50px;
+  }
+
+}
+
+.l-bd {
+  .hd {
+    font-size: $large_font_size;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  padding: 0 20px;
+
+  .bd {
+    margin-top: 20px;
+
+    label {
+      display: block;
+    }
+
+    fieldset {
+      margin-top: 15px;
+    }
+
+    input {
+      border: 1px solid $light_font_color;
+      height: 35px;
+      width: 100%;
+      display: block;
+      &:focus {
+        border-color: $default_font_color;
+      }
+      margin-top: 5px;
+      padding-left: 10px;
+    }
+
+    button {
+      display: block;
+      border: none;
+      outline: none;
+      box-shadow: none;
+    }
+
+  }
+}
+
+.l-btns {
+  margin-top: 30px;
+  .btn-sign-in, .btn-facebook {
+    height: 40px;
+    width: 100%;
+    text-transform: uppercase;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+
+  }
+
+  .btn-sign-in {
+    background-color: $default_font_color;
+    color: #fff;
+    font-size: $big_font_size;
+    &.disabled{
+      cursor: default;
+      background-color: $light_font_color;
+    }
+  }
+
+  .btn-facebook {
+    background-color: $facebook_color;
+    color: #fff;
+    .ic {
+
+    }
+  }
+
+  .l-or {
+    margin: 15px auto;
+    text-align: center;
+    text-transform: uppercase;
+    color: $light_font_color;
+  }
+}
+
+.l-double {
+  & > * {
+    width: 50%;
+    &:nth-child(1) {
+      padding-right: 10px;
+    }
+    &:nth-child(2) {
+      padding-left: 10px;
+    }
+  }
+
+}
+
+.l-policy {
+  margin-top: 15px;
+  .x-cell {
+    &:first-child {
+      width: 20px;
+    }
+  }
+}
+
+form{
+  display: block;
+  max-width: 400px;
+}
+
+.x-body-1 .x-footer{
+  padding: 0 40px;
+}
+
+.underline{
+  text-decoration: underline;
+}

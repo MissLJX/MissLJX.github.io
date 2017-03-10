@@ -1,0 +1,129 @@
+@import "style";
+@import "flexslider";
+
+.i-header-tip {
+  height: 30px;
+  background-color: $default_font_color;
+  font-style: italic;
+  font-size: $large_font_size;
+  font-weight: bold;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.i-sliders {
+  margin-top: 10px;
+}
+
+.i-editor-picks {
+  margin-top: 15px;
+  padding: 25px 0;
+  background-color: #F19CA6;
+  .hd {
+    padding: 0 10px 20px 20px;
+    text-transform: uppercase;
+    color: #fff;
+    h2 {
+      font-weight: bold;
+      font-size: 20px;
+      display: inline-block;
+      padding-left: 10px;
+    }
+    a{
+      color: #fff;
+    }
+    .view-more {
+      font-size: $default_font_size;
+      text-decoration: underline;
+      display: inline-block;
+      float: right;
+      line-height: 25px;
+      font-style: italic;
+      font-weight: bold;
+    }
+  }
+
+  .editors {
+    .editor {
+      img{
+        position: relative;
+        left: 10px;
+      }
+      &>div{
+        position: relative;
+        padding-left: 20px;
+        .counter {
+          font-weight: bold;
+          font-size: $default_font_size;
+          width: 70px;
+          height: 20px;
+          text-align: center;
+          line-height: 20px;
+          position: absolute;
+          left: 30px;
+          bottom: 0;
+          background-color: $default_font_color;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.i-block-margin-01{
+  margin-top: 30px;
+}
+
+.i-block-margin-02{
+  margin-top: 40px;
+}
+
+.i-shop-now-block{
+  width: 80%;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  figure{
+    img{
+      display: block;
+      width: 100%;
+    }
+  }
+  figcaption{
+    h2{
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+    .dsc{
+      font-size: $default_font_color;
+      margin-top: 10px;
+    }
+    text-align: center;
+  }
+  .shop-now{
+    @extend .x-btn;
+    border-width: 2px;
+    width: 200px;
+    height: 40px;
+    line-height: 36px;
+    text-align: center;
+    margin: 10px auto 0 auto;
+    display: block;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
+
+
+
+.i-view-more {
+  display: inline-block;
+  text-decoration: underline;
+  font-size: $big_font_size;
+  cursor: pointer;
+}
+

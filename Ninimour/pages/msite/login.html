@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="../../css/msite/login.css">
+</head>
+<body>
+<div class="x-body">
+    <div class="x-header">
+        <header>
+            <div class="x-left-header">
+                <span class="x-menu-icon" id="ninimour-menu-btn"></span>
+                <span class="x-search-icon"></span>
+            </div>
+            <div class="x-right-header">
+                <span class="x-login-icon"></span>
+                <span class="x-bag-icon"></span>
+            </div>
+            <h1 class="x-logo">
+                <img src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon00.png" alt="Chique Doll">
+            </h1>
+        </header>
+    </div>
+
+    <div class="x-mask x-hide" id="ninimour-menu-mask"></div>
+    <div class="x-nav" id="ninimour-menu">
+
+        <div class="hd">
+            <h1 class="x-logo"><img src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon00.png"
+                                    alt="Chique Doll"></h1>
+        </div>
+
+        <div class="bd">
+            <ul class="x-level-1">
+                <li class="x-bold"><a href="#">New In</a></li>
+                <li class="x-bold"><a href="#">Trending Now</a></li>
+                <li class="x-bold"><a href="#">Collections</a></li>
+            </ul>
+
+            <ul class="x-level-1">
+                <li>
+                    <a href="#">Dresses</a>
+                    <ul class="x-level-2">
+                        <li><a>Bandage</a></li>
+                        <li><a>Pencil</a></li>
+                        <li><a>Maxi</a></li>
+                        <li><a>lace</a></li>
+                        <li><a>Chiffon</a></li>
+                        <li><a>Mini</a></li>
+                        <li><a>Vintage</a></li>
+                        <li><a>Evening</a></li>
+                        <li><a>Long sleeves</a></li>
+                        <li><a>Casual</a></li>
+                        <li><a>Bodycon</a></li>
+                        <li><a>Floral dress</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Tops</a></li>
+                <li><a href="#">Swimwear</a></li>
+                <li><a href="#">Sports Wear</a></li>
+                <li><a href="#">Bottoms</a></li>
+                <li><a href="#">Accessories</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="x-wrapper">
+        <div class="x-main">
+            <div class="lg-wrapper">
+                <div class="lg-tabs">
+                    <div class="lg-tab active">
+                        <div class="bd">
+                            <h2>Sign In</h2>
+                            <div class="lg-line">
+                                <div class="lg-face">Login with Facebook</div>
+                            </div>
+                            <div class="lg-form-area">
+                                <form id="login-form">
+                                    <div class="">
+                                        <input type="email" id="login-email" name="email" class="x-input" required placeholder="Email *">
+                                    </div>
+                                    <div class="lg-line">
+                                        <input type="password" id="login-password" name="email" class="x-input" required placeholder="Password *">
+                                    </div>
+                                    <div class="lg-submit-btn">
+                                        <button type="submit">Sign In</button>
+                                    </div>
+                                </form>
+                                <div class="lg-line x-text-center">Forget password?</div>
+                                <div class="x-text-center">New to Chic Me? <span id="lg-sign-up" class="x-red">Sign up</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg-tab">
+                        <div class="bd">
+                            <h2>Join Chic me to get your coupon or credits.</h2>
+                            <div class="lg-line">
+                                <div class="lg-face">Login with Facebook</div>
+                            </div>
+                            <div class="lg-form-area">
+                                <form>
+                                    <div class="lg-double">
+                                        <div>
+                                            <input type="text" required class="x-input" placeholder="First Name *">
+                                        </div>
+                                        <div>
+                                            <input type="text" required class="x-input" placeholder="Last Name *">
+                                        </div>
+                                    </div>
+
+                                    <div class="lg-line">
+                                        <input type="email" id="register-email" name="email" required class="x-input" placeholder="Email *">
+                                    </div>
+
+                                    <div class="lg-line">
+                                        <input type="password" id="register-password" name="password" required class="x-input" placeholder="Password *">
+                                    </div>
+
+                                    <div class="x-table lg-line">
+                                        <div class="x-cell x-v-middle">
+                                            <div class="x-checkbox"></div>
+                                        </div>
+                                        <div class="x-cell x-v-middle">
+                                            <p>
+                                                I agree to the <a class="x-red">Terms of Service</a> and <a class="x-red">Privacy Policy</a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="lg-submit-btn">
+                                        <button type="submit">Create Account</button>
+                                    </div>
+                                </form>
+
+                                <div class="lg-line x-text-center">Have an account? <span id="lg-sign-in" class="x-red">Sign In</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/jquery.cookie.js"></script>
+<script src="../../js/msite/static.js"></script>
+<script src="../../js/login.js"></script>
+
+</body>
+</html>

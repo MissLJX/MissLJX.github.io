@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="../../css/msite/shoppingcart.css">
+</head>
+<body>
+<div class="x-body">
+    <div class="x-header">
+        <header>
+            <div class="x-left-header">
+                <span class="x-menu-icon" id="ninimour-menu-btn"></span>
+                <span class="x-search-icon"></span>
+            </div>
+            <div class="x-right-header">
+                <span class="x-login-icon"></span>
+                <span class="x-bag-icon"></span>
+            </div>
+            <h1 class="x-logo">
+                <img src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon00.png" alt="Chique Doll">
+            </h1>
+        </header>
+    </div>
+
+    <div class="x-mask x-hide" id="ninimour-menu-mask"></div>
+    <div class="x-nav" id="ninimour-menu">
+
+        <div class="hd">
+            <h1 class="x-logo"><img src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon00.png"
+                                    alt="Chique Doll"></h1>
+        </div>
+
+        <div class="bd">
+            <ul class="x-level-1">
+                <li class="x-bold"><a href="#">New In</a></li>
+                <li class="x-bold"><a href="#">Trending Now</a></li>
+                <li class="x-bold"><a href="#">Collections</a></li>
+            </ul>
+
+            <ul class="x-level-1">
+                <li>
+                    <a href="#">Dresses</a>
+                    <ul class="x-level-2">
+                        <li><a>Bandage</a></li>
+                        <li><a>Pencil</a></li>
+                        <li><a>Maxi</a></li>
+                        <li><a>lace</a></li>
+                        <li><a>Chiffon</a></li>
+                        <li><a>Mini</a></li>
+                        <li><a>Vintage</a></li>
+                        <li><a>Evening</a></li>
+                        <li><a>Long sleeves</a></li>
+                        <li><a>Casual</a></li>
+                        <li><a>Bodycon</a></li>
+                        <li><a>Floral dress</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Tops</a></li>
+                <li><a href="#">Swimwear</a></li>
+                <li><a href="#">Sports Wear</a></li>
+                <li><a href="#">Bottoms</a></li>
+                <li><a href="#">Accessories</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="x-wrapper">
+        <div class="x-main">
+            <div class="s-address-page">
+                <div class="x-address-body">
+                    <p class="line-block">* Indicates a field is required</p>
+                    <form>
+                        <div class="line-block">
+                            <input id="name" name="name" class="x-input" type="text" placeholder="Full Name *" required value="${shipping.name}">
+                        </div>
+                        <div class="line-block">
+                            <input id="streetAddress1"  name="streetAddress1" class="x-input" type="text" placeholder="Street Address *" required value="${shipping.streetAddress1 }">
+                        </div>
+                        <div class="line-block">
+                            <input id="unit" name="unit" type="text" class="x-input" placeholder="Apt/Suit/Unit(Optional)" value="${shipping.unit}">
+                        </div>
+                        <div class="line-block double">
+                            <div>
+                                <select>
+                                    <option>Country *</option>
+                                </select>
+                            </div>
+
+                            <div id="states-wrapper">
+                                <select>
+                                    <option>State *</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="line-block">
+                            <input id="city" name="city" type="text" class="x-input" placeholder="City *" required value="${shipping.city}">
+                        </div>
+                        <div class="line-block double">
+                            <div>
+                                <input id="zipCode" name="zipCode" type="text" class="x-input" placeholder="Zip Code *" required value="${shipping.zipCode}">
+                            </div>
+
+                            <div>
+                                <input id="phoneNumber" name="phoneNumber" type="tel" class="x-input" placeholder="Phone Number *" required value="${phoneNumber}">
+                            </div>
+                        </div>
+                        <div class="line-block">
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../js/jquery-1.11.3.min.js"></script>
+<script src="../../js/jquery.cookie.js"></script>
+<script src="../../js/msite/static.js"></script>
+<script src="../../js/msite/address.js"></script>
+
+</body>
+</html>

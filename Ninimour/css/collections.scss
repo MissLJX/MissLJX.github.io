@@ -1,0 +1,16 @@
+@import 'style';
+
+.c-collections{
+  .c-collection{
+    img{
+      display: block;
+      @extend .x-image-hover;
+      width: 100%;
+    }
+
+    margin-top: 4%;
+    &:first-child{
+      margin-top: 0;
+    }
+  }
+}

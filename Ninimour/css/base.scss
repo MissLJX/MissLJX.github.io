@@ -1,0 +1,37 @@
+$default_font_size:14px;
+$mini_font_size:10px;
+$small_font_size:12px;
+$big_font_size:16px;
+$large_font_size:18px;
+
+
+$default_font_color:#222928;
+$light_font_color:#909393;
+$deep_light_font_color:#d8dadb;
+$red_color:#f19ca6;
+$facebook_color:#395791;
+
+$default_dark_bg_color:#222928;
+
+$default_font_family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+
+$image_prefix:'https://dgzfssf1la12s.cloudfront.net/site/ninimour/';
+
+@mixin default_font{
+  font-weight: normal;
+  color: $default_font_color;
+  font-family: $default_font_family;
+  font-size: $default_font_size;
+}
+
+@mixin multibowser($field,$value){
+  -webkit-#{$field}:$value;
+  -moz-#{$field}:$value;
+  -os-#{$field}:$value;
+  -ms-#{$field}:$value;
+  #{$field}:$value;
+}
+
+@mixin image($icon){
+  background-image: url('https://dgzfssf1la12s.cloudfront.net/site/ninimour/#{$icon}');
+}

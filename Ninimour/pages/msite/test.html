@@ -1,0 +1,381 @@
+<%@page import="com.amour.wanna.core.utils.ContextUtils"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+String path = request.getContextPath();
+String serverPath = request.getServerName()+path+"/";
+String basePath = "http://"+serverPath;
+String sslPath = "https://"+serverPath;
+%>
+
+<%
+String shoppingpath = (String)request.getAttribute("shoppingpath");
+%>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <meta name="description" content="Shopping Cart">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" href="${ctx}/resources/css/msite/shoppingcart.css">
+    <script>
+        var ctx = '${ctx}';
+        var shoppingpath = '<%=shoppingpath%>';
+        var serverPath = "<%=serverPath%>";
+        var basePath = "<%=basePath%>";
+    </script>
+</head>
+<body>
+<div class="x-body">
+
+    <!--header-->
+    <%@ include file="module/header.jsp"%>
+
+    <!--menu-->
+    <%@ include file="module/nav.jsp"%>
+    <div class="x-wrapper">
+        <div class="x-main">
+            <div id="shoppingcart"></div>
+            <script id="tpl-shoppingcart" type="text/html">
+                <div class="s-cart">
+                    <ul class="s-items x-lay-fixed">
+
+                        {{each shoppingCartProducts as product}}
+                        <li class="s-item">
+                            <div>
+                                <img class="s-item-image" src="{{product.imageUrl}}">
+                            </div>
+                            <div>
+                                <div class="s-infos">
+                                    <p class="s-item-name">{{product.productName}}</p>
+                                    <div>
+                                        {{if product.size}}
+                                        <span>{{product.size}}</span>
+                                        {{/if}}
+                                        {{if product.color}}
+                                        ,<span>{{product.color}}</span>
+                                        {{/if}}
+                                    </div>
+                                    <div>
+                                        {{if product.itemPrice.amount - product.realPrice.amount > 0}}
+                                        <span class="s-real-price">{{product.realPrice | formatPrice}}</span>
+                                        <span>{{if product.isProductDiscount}}(Discount){{else}}(Coupon){{/if}}</span>
+                                        <del class="s-delete-price">{{product.itemPrice | formatPrice}}</del>
+                                        <%-- <p class="x-red">{{product.productDiscountRate*100}}% OFF</p> --%>
+                                        {{else}}
+                                        <span class="s-real-price">{{product.realPrice | formatPrice}}</span>
+                                        {{/if}}
+                                    </div>
+                                    <div>
+                                        <select class="s-quantity-select">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+
+                                        <span class="x-btn s-item-edit">Edit</span>
+
+                                        <span class="s-item-delete"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                    <div class="s-blocks">
+
+                        {{if shippingDetail}}
+                        <div class="s-block">
+                            <div class="hd">
+                                <h3>Shipping Address</h3>
+                            <span class="right-go" id="ninimour-edit-address">
+                                <span class="x-v-middle">Edit</span>
+                                <span class="go"></span>
+                            </span>
+                            </div>
+                            <div class="bd">
+                                <address>
+                                    <div><strong>{{shippingDetail.name}}</strong>({{shippingDetail.phoneNumber}})</div>
+                                    <div>{{shippingDetail.streetAddress1}} , {{shippingDetail.unit}}</div>
+                                    <div>{{shippingDetail.zipCode}}, {{shippingDetail.city}}, {{if shippingDetail.state}}{{shippingDetail.state.label || shippingDetail.state.value}}, {{/if}}{{shippingDetail.country.label}}</div>
+                                </address>
+                            </div>
+                        </div>
+                        {{/if}}
+
+
+                        <div class="s-block">
+                            <div class="hd">
+                                <h3>Coupons</h3>
+                                <span class="right-go" id="ninimour-select-coupon">
+                                    <span class="x-v-middle">Any Order</span>
+                                    <span class="go"></span>
+                                </span>
+                            </div>
+                         </div>
+
+                        <div class="s-block">
+                            <div class="hd">
+                                <h3>Shipping Method</h3>
+                                <span class="right-go" id="ninimour-select-shipping-method">
+                                    <span class="x-v-middle">{{shippingMethod.title}}</span>
+                                    <span class="go"></span>
+                                </span>
+                            </div>
+
+                            <!-- method list -->
+                            <div class="s-shipping-method-window">
+                                <div class="hd">
+                                    <h3>Shipping Method</h3>
+                                    <span class="s-cancel"></span>
+                                </div>
+
+                                <div class="bd">
+                                    <ul class="s-shipping-method-list">
+                                        {{each shippingMethodList as _shippingMethod}}
+                                        <li class="ninimour-shipping-list-method s-shipping-method {{if _shippingMethod.id == shippingMethod.id}}active{{/if}}" data-method="{{_shippingMethod.id}}">
+                                            <div class="x-table">
+                                                <div class="x-cell x-v-middle">
+                                                    <div class="p">
+                                                        <div>{{_shippingMethod.title}} {{_shippingMethod.price | formatPrice}}</div>
+                                                        <div>{{_shippingMethod.shippingTime}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="x-cell x-v-middle x-text-right">
+                                                    <span class="s-right-gou"></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+
+                                    <div class="s-method-image">
+                                        <p>Express Shipping : We will choose the most appropciate carrier for you .</p>
+                                        <img  src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon17.png">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="s-block">
+                            <div class="hd">
+                                Order Summary
+                            </div>
+                            <div class="bd">
+                                <div class="s-summaries">
+                                    <div class="s-summary">
+                                        <div>Retail Price</div>
+                                        <div>{{orderSummary.itemTotal | formatPrice}}</div>
+                                    </div>
+
+                                    {{if orderSummary.productDiscount && orderSummary.productDiscount.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Discount</div>
+                                        <div>- {{orderSummary.productDiscount | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    {{if orderSummary.couponDiscount && orderSummary.couponDiscount.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Coupons</div>
+                                        <div>- {{orderSummary.couponDiscount | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    {{if orderSummary.pointDiscount && orderSummary.pointDiscount.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Credits</div>
+                                        <div>- {{orderSummary.pointDiscount | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    <div class="s-summary x-bold">
+                                        <div>Subtotal</div>
+                                        <div>{{orderSummary.subTotal | formatPrice}}</div>
+                                    </div>
+
+                                    {{if orderSummary.extraOff && orderSummary.extraOff.amount > 0}}
+                                    <div class="s-summary red-line">
+                                        <div>Extra Off</div>
+                                        <div>- {{orderSummary.extraOff | formatPrice}}</div>
+                                    </div>
+                                    {{/if}}
+
+                                    <div class="s-summary">
+                                        <div>Estimated SHipping</div>
+                                        <div>{{orderSummary.shippingPrice | formatPrice}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="s-total">
+                            <span class="label">Order Total</span>
+                            <span class="price">{{orderSummary.orderTotal | formatPrice}}</span>
+                        </div>
+                    </div>
+
+                    <div class="s-buy-tools">
+                        <div>
+                            <div class="s-paypal-btn"></div>
+                        </div>
+                        <div>
+                            <div class="s-credit-btn"></div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="s-credit-payer">
+    <div class="s-credit-list-area-01 active" id="ninimour-credit-01">
+        <div class="hd">
+            <h3>Payment(VISA)</h3>
+            <span class="s-oper">Cancel</span>
+        </div>
+        <div class="bd">
+            <ul class="s-cards">
+                <li class="s-card" id="ninimour-selected-card">
+                    <div class="x-table">
+                        <div class="x-cell x-v-middle">Card No 4111111****1111</div>
+                        <div class="x-cell x-text-right x-v-middle">
+                            <span class="s-right-go"></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="x-table s-credit-summary">
+                <div class="x-cell">
+                    <span>2</span> Items
+                </div>
+                <div class="x-cell x-text-right">
+                    <span class="s-total-price">$73.48</span>
+                </div>
+            </div>
+
+            <div class="x-table s-trust">
+                <div class="x-cell">
+                    <img src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon12.png">
+                </div>
+                <div class="x-cell">
+                    <p>We will not save your credit information. Trusted by over one millon shoppers in 50 countries.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="s-credit-list-area-02" id="ninimour-credit-02">
+        <div class="hd">
+            <h3>Select</h3>
+            <span class="s-oper" id="ninimour-credit-back">Back</span>
+        </div>
+        <div class="bd">
+            <ul class="s-cards">
+                <li class="s-card ninimour-card selected">
+                    <div class="x-table">
+                        <div class="x-cell x-v-middle">Card No 4111111****1111</div>
+                        <div class="x-cell x-text-right x-v-middle">
+                            <span class="s-right-gou"></span>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="s-card ninimour-card">
+                    <div class="x-table">
+                        <div class="x-cell x-v-middle">Card No 422222****2222</div>
+                        <div class="x-cell x-text-right x-v-middle">
+                            <span class="s-right-gou"></span>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="s-card s-card-editor" id="ninimour-card-editor">
+                    <div class="x-table">
+                        <div class="x-cell x-v-middle">Edit your card(s)</div>
+                        <div class="x-cell x-text-right x-v-middle">
+                            <span class="s-credit-add"></span>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+
+            <div class="x-table s-trust">
+                <div class="x-cell">
+                    <img src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon12.png">
+                </div>
+                <div class="x-cell">
+                    <p>We will not save your credit information. Trusted by over one millon shoppers in 50 countries.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="s-credit-edit-window" id="ninimour-credit-edit-window">
+    <div class="hd">
+        <h3>Credit Card</h3>
+        <span class="s-cancel" id="ninimour-credit-edit-close">Cancel</span>
+    </div>
+    <div class="bd">
+        <div class="s-ocean-area"></div>
+        <div class="s-nini-area">
+            <ul class="s-cards">
+                <li class="s-card ninimour-card selected">
+                    <div class="x-table">
+                        <div class="x-cell x-v-middle">Card No 4111111****1111</div>
+                        <div class="x-cell x-text-right x-v-middle">
+                            <span class="s-credit-add"></span>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="s-card ninimour-card">
+                    <div class="x-table">
+                        <div class="x-cell x-v-middle">Card No 422222****2222</div>
+                        <div class="x-cell x-text-right x-v-middle">
+                            <span class="s-credit-add"></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="x-table s-trust">
+                <div class="x-cell">
+                    <img src="https://dgzfssf1la12s.cloudfront.net/site/ninimour/msite/icon12.png">
+                </div>
+                <div class="x-cell">
+                    <p>We will not save your credit information. Trusted by over one millon shoppers in 50 countries.</p>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+<script src="${ctx}/resources/js/jquery-1.11.3.min.js"></script>
+<script src='${ctx}/resources/js/jquery.cookie.js'></script>
+<script src="${ctx}/resources/js/template.js"></script>
+<script src="${ctx}/resources/js/msite/static.js"></script>
+<script src="${ctx}/resources/js/msite/shoppingcart.js"></script>
+
+</body>
+</html>

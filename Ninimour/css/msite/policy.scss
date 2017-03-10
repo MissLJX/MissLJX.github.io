@@ -1,0 +1,26 @@
+@import "style";
+
+.content{
+  font-size: $default_font_size;
+  padding: 10px;
+}
+
+p{
+  line-height: $large_font_size;
+}
+
+h1{
+  font-size: 20px;
+}
+
+h2{
+  font-size: 18px;
+}
+
+h3{
+  font-size: 14px;
+}
+
+ul{
+  list-style-type: circle;
+}

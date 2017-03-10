@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Form</title>
+
+
+    <style>
+        .x-error-msg-class{
+            color: #fff;
+            background-color: #bf616a;
+            padding: 10px;
+            border-radius: 4px;
+            position: absolute;
+            margin: 0;
+        }
+        .x-error-input-class{
+            border:1px solid red;
+            box-shadow: inset 0 0 1px red;
+        }
+    </style>
+
+
+    <script src="../js/jquery-1.11.3.min.js"></script>
+
+    <script src="../js/form.js"></script>
+
+    <script>
+
+        $(function(){
+
+            new Form($('#testForm')[0] , {
+
+            } , function(){
+                alert('sucess');
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+    <form id="testForm" action="#" method="post">
+        <div>
+            <input type="text" required>
+        </div>
+        <div>
+            <input type="text" required>
+        </div>
+        <div>
+            <input type="email" >
+            <input id="input01" type="text" title="fuck partten" pattern="^[\d]{4,20}">
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</body>
+</html>

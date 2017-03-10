@@ -1,0 +1,76 @@
+@import "style";
+
+
+
+
+.lg-tabs{
+
+  .lg-tab{
+    display: none;
+    &.active{
+      display: block;
+    }
+
+    .x-input{
+      height: 35px;
+      width: 100%;
+    }
+
+    .bd{
+      padding: 20px 10px;
+      max-width: 300px;
+      margin: auto;
+    }
+  }
+}
+
+.lg-line{
+  margin-top: 15px;
+}
+
+h2{
+  font-weight: bold;
+  font-size: $large_font_size;
+}
+
+.lg-face{
+  background-color: #3D62AD;
+  display: block;
+  height: 40px;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  text-transform: uppercase;
+}
+
+button[type=submit]{
+  @extend .x-btn.active;
+  width: 100%;
+  height: 40px;
+  line-height: 38px;
+  outline: none;
+  box-shadow: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.lg-form-area{
+  margin-top: 15px;
+  border-top: 1px solid $deep_light_font_color;
+  padding-top: 15px;
+}
+
+.lg-submit-btn{
+  margin-top: 30px;
+}
+
+.lg-double{
+  @extend .pure-g;
+  & > *{
+    @extend .pure-u-1-2;
+    padding: 0 7.5px;
+  }
+  margin-left: -7.5px;
+  margin-right: -7.5px;
+}
